@@ -27,7 +27,6 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	struct s_links	*links;
-	struct s_links	*cur_link;
 	struct s_room	*next;
 }					t_room;
 
@@ -37,7 +36,12 @@ typedef struct		s_lemin
 	int				error;
 	char			*start;
 	char			*end;
+	struct s_room	*head_room;
 	struct s_room	*rooms;
-	struct s_room	*cur_room;
 }					t_lemin;
+int					if_all_num(char *line);
+int					if_exist(t_lemin *lemin, char **arr);
+t_lemin				*line_handler(t_lemin *lemin, char **arr);
+t_lemin				*if_valid(t_lemin *lemin, char *line);
+t_lemin				*command_handler(t_lemin *lemin, char *line);
 #endif

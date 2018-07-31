@@ -22,21 +22,10 @@ t_lemin			*make_struct(void)
 	lemin->start = NULL;
 	lemin->end = NULL;
 	lemin->rooms = (t_room *)malloc(sizeof(t_room));
+	lemin->rooms->next = NULL;
 	lemin->rooms->name = NULL;
+	lemin->head_room = lemin->rooms;
 	return (lemin);
-}
-
-int				if_all_num(char *line)
-{
-	int		i;
-
-	i = -1;
-	while (line[++i])
-	{
-		if (!('0' <= line[i] && line[i] <= '9'))
-			return (-1);
-	}
-	return (1);
 }
 
 t_lemin			*get_ant_count(t_lemin *lemin)
@@ -62,49 +51,6 @@ t_lemin			*get_ant_count(t_lemin *lemin)
 	}
 	return (lemin);
 }
-// HERE WE GO!!!!!!!!!!!!!!!!!
-int				if_valid(char *line)
-{
-	char	**arr;
-	int		i;
-
-	i = 0;
-	arr = ft_strsplit(line, ' ');
-	while (arr[i])
-		i++;
-	if (i == 3)
-	{
-		if (if_all_num(arr[1]) && if_all_num(arr[2]))
-			return (0);
-	}
-	free_array(arr);
-	return (-1);
-}
-
-t_lemin			*start_handler(t_lemin *lemin)
-{
-	if (lemin->start == NULL && get_next_line(0, &line))
-	{
-		if (if_valid(line) == 0)
-			line_handler(lemin, line);
-		else
-			emin->error == -1;
-		free(line);
-	}
-	else
-		lemin->error == -1;
-	return (lemin);
-}
-
-t_lemin			*command_handler(t_lemin *lemin, char *line)
-{
-	if (ft_strcmp(line, "##start") == 0)
-		start_handler(lemin);
-	else if (ft_strcmp(line, "##end") == 0)
-		end_handler(lemin);
-	free(line);
-	return (lemin);
-}
 
 t_lemin			*get_rooms(t_lemin *lemin)
 {
@@ -126,6 +72,7 @@ t_lemin			*get_rooms(t_lemin *lemin)
 			command_handler(lemin, line);
 		else
 		{
+			// HERE WE GO!!!!!!!!!!!!!!!!!
 			if_room(line) == 0 ? record_room(lemin, line) : 0;
 			if_link(line) == 1 ? record_links(lemin, line) : 0;
 		}

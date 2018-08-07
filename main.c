@@ -72,9 +72,8 @@ t_lemin			*get_rooms(t_lemin *lemin)
 			command_handler(lemin, line);
 		else
 		{
-			// HERE WE GO!!!!!!!!!!!!!!!!!
-			if_room(line) == 0 ? record_room(lemin, line) : 0;
-			if_link(line) == 1 ? record_links(lemin, line) : 0;
+			if_valid(lemin, line);
+			free(line);
 		}
 	}
 	return (lemin);
@@ -90,6 +89,7 @@ int				main(void)
 	if (lemin->error != -1)
 	{
 		get_rooms(lemin);
+		get_links(lemin);
 		lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
 	}
 	else

@@ -25,6 +25,9 @@ t_lemin			*make_struct(void)
 	lemin->rooms->next = NULL;
 	lemin->rooms->name = NULL;
 	lemin->head_room = lemin->rooms;
+	lemin->rooms->links = (t_links *)malloc(sizeof(t_links));
+	lemin->rooms->links->next = NULL;
+	lemin->rooms->links->name = NULL;
 	return (lemin);
 }
 
@@ -52,6 +55,29 @@ t_lemin			*get_ant_count(t_lemin *lemin)
 	return (lemin);
 }
 
+t_lemin			*if_link(t_lemin *lemin, char *line)
+{
+	char	**arr;
+	int		i;
+
+	i = 0;
+	arr = ft_strsplit(line, '-');
+	while (arr[i])
+		i++;
+	if (i == 2 && arr[0][0] && arr[0][0] != '#' && arr[0][0] != 'L' &&
+		arr[1][0] && arr[1][0] != '#' && arr[1][0] != 'L')
+	{
+		if (ft_strcmp(arr[0], arr[1]) != 0 && if_exist_rooms(lemin, arr))
+			get_links(lemin, arr);
+		else
+			lemin->error = -1;
+	}
+	else
+		lemin->error = -1;
+	free_array(arr);
+	return (lemin);
+}
+
 t_lemin			*get_rooms(t_lemin *lemin)
 {
 	char		*line;
@@ -73,6 +99,8 @@ t_lemin			*get_rooms(t_lemin *lemin)
 		else
 		{
 			if_valid(lemin, line);
+			if (lemin->error == -1)
+				if_link(lemin, line);
 			free(line);
 		}
 	}
@@ -89,7 +117,6 @@ int				main(void)
 	if (lemin->error != -1)
 	{
 		get_rooms(lemin);
-		get_links(lemin);
 		lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
 	}
 	else

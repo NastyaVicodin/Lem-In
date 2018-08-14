@@ -38,6 +38,25 @@ int				if_exist(t_lemin *lemin, char **arr)
 	return (1);
 }
 
+int				*if_exist_rooms(t_lemin *lemin, char **arr)
+{
+	t_lemin	*head;
+	int		i;
+
+	i = 0;
+	head = lemin->head_room;
+	while (head && i < 2)
+	{
+		if (ft_strcmp(head->name, arr[0]) == 0 ||
+			ft_strcmp(head->name, arr[1]) == 0)
+			i++;
+		head = head->next;
+	}
+	if (i != 2)
+		return (-1);
+	return (1);
+}
+
 t_lemin			*line_handler(t_lemin *lemin, char **arr)
 {
 	int		len;

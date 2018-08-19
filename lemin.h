@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.h                                           :+:      :+:    :+:   */
+/*   lemin.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alukyane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,6 +14,7 @@
 # define LEMIN_H
 
 # include "libft/libft.h"
+# include <stdio.h>
 
 typedef  struct		s_links
 {
@@ -41,7 +42,9 @@ typedef struct		s_lemin
 }					t_lemin;
 int					if_all_num(char *line);
 int					if_exist(t_lemin *lemin, char **arr);
+int					if_exist_rooms(t_lemin *lemin, char **arr);
 t_lemin				*line_handler(t_lemin *lemin, char **arr);
 t_lemin				*if_valid(t_lemin *lemin, char *line);
 t_lemin				*command_handler(t_lemin *lemin, char *line);
+t_lemin				*if_link(t_lemin *lemin, char *line);
 #endif

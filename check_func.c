@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lemin.h"
+
 int				if_all_num(char *line)
 {
 	int		i;
@@ -25,35 +27,16 @@ int				if_all_num(char *line)
 
 int				if_exist(t_lemin *lemin, char **arr)
 {
-	t_lemin	*head;
+	t_room	*head;
 
 	head = lemin->head_room;
-	while (head)
+	while (head && head->name)
 	{
 		if (ft_strcmp(head->name, arr[0]) == 0 ||
 			(head->x == ft_atoi(arr[1]) && head->y == ft_atoi(arr[2])))
 			return (-1);
 		head = head->next;
 	}
-	return (1);
-}
-
-int				*if_exist_rooms(t_lemin *lemin, char **arr)
-{
-	t_lemin	*head;
-	int		i;
-
-	i = 0;
-	head = lemin->head_room;
-	while (head && i < 2)
-	{
-		if (ft_strcmp(head->name, arr[0]) == 0 ||
-			ft_strcmp(head->name, arr[1]) == 0)
-			i++;
-		head = head->next;
-	}
-	if (i != 2)
-		return (-1);
 	return (1);
 }
 
@@ -88,7 +71,8 @@ t_lemin			*if_valid(t_lemin *lemin, char *line)
 		i++;
 	if (i == 3 && arr[0][0] && arr[0][0] != '#' && arr[0][0] != 'L')
 	{
-		if (if_all_num(arr[1]) && if_all_num(arr[2]) && if_exist(lemin, arr))
+		if (if_all_num(arr[1]) == 1 && if_all_num(arr[2]) == 1 &&
+			if_exist(lemin, arr) == 1)
 			line_handler(lemin, arr);
 		else
 			lemin->error = -1;

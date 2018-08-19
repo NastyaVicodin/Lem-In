@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lemin.h"
 
-t_lemin			*make_struct(void)
+static t_lemin			*make_struct(void)
 {
 	t_lemin		*lemin;
 
@@ -31,18 +31,19 @@ t_lemin			*make_struct(void)
 	return (lemin);
 }
 
-t_lemin			*get_ant_count(t_lemin *lemin)
+static t_lemin			*get_ant_count(t_lemin *lemin)
 {
 	char		*line;
 
 	while (get_next_line(0, &line))
 	{
-		if (line[0] == '#' && line[1] && line[1] != '#')
+		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
+			ft_strcmp(line, "##end") != 0)
 		{
 			free(line);
 			continue ;
 		}
-		if (ft_strlen(line) <= 20 && if_all_num(line))
+		if (ft_strlen(line) <= 20 && if_all_num(line) == 1)
 			lemin->ant_count = ft_atoi(line);
 		if (!lemin->ant_count)
 		{
@@ -51,40 +52,20 @@ t_lemin			*get_ant_count(t_lemin *lemin)
 			break ;
 		}
 		free(line);
+		if (lemin->ant_count)
+			break ;
 	}
 	return (lemin);
 }
 
-t_lemin			*if_link(t_lemin *lemin, char *line)
-{
-	char	**arr;
-	int		i;
-
-	i = 0;
-	arr = ft_strsplit(line, '-');
-	while (arr[i])
-		i++;
-	if (i == 2 && arr[0][0] && arr[0][0] != '#' && arr[0][0] != 'L' &&
-		arr[1][0] && arr[1][0] != '#' && arr[1][0] != 'L')
-	{
-		if (ft_strcmp(arr[0], arr[1]) != 0 && if_exist_rooms(lemin, arr))
-			get_links(lemin, arr);
-		else
-			lemin->error = -1;
-	}
-	else
-		lemin->error = -1;
-	free_array(arr);
-	return (lemin);
-}
-
-t_lemin			*get_rooms(t_lemin *lemin)
+static t_lemin			*get_rooms(t_lemin *lemin)
 {
 	char		*line;
 
-	while (get_next_line(0, &line) && lemin->error == 0)
+	while (lemin->error == 0 && get_next_line(0, &line))
 	{
-		if (line[0] == '#' && line[1] && line[1] != '#')
+		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
+			ft_strcmp(line, "##end") != 0)
 		{
 			free(line);
 			continue ;
@@ -99,25 +80,27 @@ t_lemin			*get_rooms(t_lemin *lemin)
 		else
 		{
 			if_valid(lemin, line);
-			if (lemin->error == -1)
-				if_link(lemin, line);
+			lemin->error == -1 ? if_link(lemin, line) : 0;
 			free(line);
 		}
 	}
 	return (lemin);
 }
 
-int				main(void)
+int						main(void)
 {
 	t_lemin		*lemin;
-	char		*line;
 
 	lemin = make_struct();
 	get_ant_count(lemin);
 	if (lemin->error != -1)
 	{
 		get_rooms(lemin);
-		lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
+		if (lemin->error != -1)
+			write(1, "IM HAPPY!\n", 10);
+		else
+			write(1, "ERROR\n", 7);
+		//lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
 	}
 	else
 		write(1, "ERROR\n", 7);

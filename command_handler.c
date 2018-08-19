@@ -10,27 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lemin.h"
+
 static t_lemin	*start_handler(t_lemin *lemin)
 {
+	char *line;
+
 	if (lemin->start == NULL && get_next_line(0, &line))
 	{
 		if_valid(lemin, line);
 		free(line);
 	}
 	else
-		lemin->error == -1;
+		lemin->error = -1;
 	return (lemin);
 }
 
 static t_lemin	*end_handler(t_lemin *lemin)
 {
+	char *line;
+
 	if (lemin->end == NULL && get_next_line(0, &line))
 	{
 		if_valid(lemin, line);
 		free(line);
 	}
 	else
-		lemin->error == -1;
+		lemin->error = -1;
 	return (lemin);
 }
 

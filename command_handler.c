@@ -65,5 +65,6 @@ t_lemin			*command_handler(t_lemin *lemin, char *line)
 		}
 	}
 	free(line);
+	system("leaks lem-in");
 	return (lemin);
 }

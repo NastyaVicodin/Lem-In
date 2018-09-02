@@ -36,6 +36,7 @@ static t_lemin			*get_ant_count(t_lemin *lemin)
 {
 	char		*line;
 
+	//no leaks
 	while (get_next_line(0, &line))
 	{
 		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
@@ -85,6 +86,7 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			free(line);
 		}
 	}
+	system("leaks lem-in");
 	return (lemin);
 }
 
@@ -135,5 +137,6 @@ int						main(void)
 	else
 		write(1, "ERROR\n", 7);
 	free_all(lemin);
+	system("leaks lem-in");
 	return (0);
 }

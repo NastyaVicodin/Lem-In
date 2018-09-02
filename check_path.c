@@ -32,5 +32,6 @@ t_lemin			*check_path(t_lemin *lemin)
 		lemin->head_room = lemin->head_room->next;
 	}
 	lemin->head_room = head;
+	lemin->error = 1;
 	return (lemin);
 }

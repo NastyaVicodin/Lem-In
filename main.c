@@ -44,7 +44,7 @@ static t_lemin			*get_ant_count(t_lemin *lemin)
 			free(line);
 			continue ;
 		}
-		if (ft_strlen(line) <= 20 && if_all_num(line) == 1)
+		if (if_all_num(line) == 1)
 			lemin->ant_count = ft_atoi(line);
 		if (!lemin->ant_count)
 		{

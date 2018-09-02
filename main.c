@@ -28,6 +28,7 @@ static t_lemin			*make_struct(void)
 	lemin->rooms->links = (t_links *)malloc(sizeof(t_links));
 	lemin->rooms->links->next = NULL;
 	lemin->rooms->links->name = NULL;
+	lemin->head_room->head_link = lemin->rooms->links;
 	return (lemin);
 }
 
@@ -87,6 +88,33 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 	return (lemin);
 }
 
+void					free_all(t_lemin *lemin)
+{
+	t_room	*prev_room;
+	t_links	*prev_link;
+
+	if (lemin)
+	{
+		lemin->start ? free(lemin->start) : 0;
+		lemin->end ? free(lemin->end) : 0;
+		while (lemin->head_room)
+		{
+			free(lemin->head_room->name);
+			while (lemin->head_room->head_link)
+			{
+				free(lemin->head_room->head_link->name);
+				prev_link = lemin->head_room->head_link;
+				lemin->head_room->head_link = lemin->head_room->head_link->next;
+				free(prev_link);
+			}
+			prev_room = lemin->head_room;
+			lemin->head_room = lemin->head_room->next;
+			free(prev_room);
+		}
+		free(lemin);
+	}
+}
+
 int						main(void)
 {
 	t_lemin		*lemin;
@@ -97,12 +125,15 @@ int						main(void)
 	{
 		get_rooms(lemin);
 		if (lemin->error != -1)
+		{
 			write(1, "IM HAPPY!\n", 10);
+		}
 		else
 			write(1, "ERROR\n", 7);
 		//lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
 	}
 	else
 		write(1, "ERROR\n", 7);
+	free_all(lemin);
 	return (0);
 }

@@ -45,6 +45,7 @@ t_lemin			*line_handler(t_lemin *lemin, char **arr)
 	int		len;
 
 	len = ft_strlen(arr[0]);
+	printf("line_handler\n");
 	if (lemin->rooms->name)
 	{
 		while (lemin->rooms->next != NULL)

@@ -15,7 +15,6 @@
 static t_lemin	*start_handler(t_lemin *lemin)
 {
 	char *line;
-
 	if (lemin->start == NULL && get_next_line(0, &line))
 	{
 		if_valid(lemin, line);
@@ -65,6 +64,5 @@ t_lemin			*command_handler(t_lemin *lemin, char *line)
 		}
 	}
 	free(line);
-	system("leaks lem-in");
 	return (lemin);
 }

@@ -22,6 +22,7 @@ static t_lemin			*make_struct(void)
 	lemin->start = NULL;
 	lemin->end = NULL;
 	lemin->rooms = (t_room *)malloc(sizeof(t_room));
+	lemin->rooms->visited = 0;
 	lemin->rooms->next = NULL;
 	lemin->rooms->name = NULL;
 	lemin->head_room = lemin->rooms;
@@ -86,7 +87,6 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			free(line);
 		}
 	}
-	system("leaks lem-in");
 	return (lemin);
 }
 

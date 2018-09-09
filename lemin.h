@@ -24,9 +24,10 @@ typedef  struct		s_links
 
 typedef struct		s_room
 {
-	char			*name;
 	int				x;
 	int				y;
+	int				visited;
+	char			*name;
 	struct s_links	*links;
 	struct s_links	*head_link;
 	struct s_room	*next;

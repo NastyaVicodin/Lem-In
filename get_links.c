@@ -27,7 +27,7 @@ static t_lemin	*new_link(t_room *room, t_lemin *lemin, int len, char *link)
 	}
 	else
 	{
-		room->links = (t_links *)malloc(sizeof(t_links));
+		!(room->links) ? room->links = (t_links *)malloc(sizeof(t_links)) : 0;
 		room->head_link = room->links;
 		room->links->next = NULL;
 		head = room->head_link;
@@ -68,7 +68,7 @@ static t_lemin	*get_links(t_lemin *lemin, char **arr)
 }
 
 static int		link_notstored(t_room *room, char *link)
-{
+{ //no leaks
 	if (ft_strcmp(room->name, link) == 0)
 		return (-1);
 	while (room->links && room->links->name)
@@ -81,22 +81,23 @@ static int		link_notstored(t_room *room, char *link)
 }
 
 static int		if_exist_rooms(t_lemin *lemin, char **arr)
-{
+{ //no leaks
 	t_room	*head;
 	int		i;
 
 	i = 0;
 	head = lemin->head_room;
 	printf("if_exist_rooms\n");
-	while (head && i < 2)
+	while (lemin->head_room && i < 2)
 	{
-		if ((ft_strcmp(head->name, arr[0]) == 0 &&
-			link_notstored(head, arr[1]) == 1) ||
-			(ft_strcmp(head->name, arr[1]) == 0 &&
-			link_notstored(head, arr[0]) == 1))
+		if ((ft_strcmp(lemin->head_room->name, arr[0]) == 0 &&
+			link_notstored(lemin->head_room, arr[1]) == 1) ||
+			(ft_strcmp(lemin->head_room->name, arr[1]) == 0 &&
+			link_notstored(lemin->head_room, arr[0]) == 1))
 			i++;
-		head = head->next;
+		lemin->head_room = lemin->head_room->next;
 	}
+	lemin->head_room = head;
 	if (i != 2)
 		return (-1);
 	return (1);

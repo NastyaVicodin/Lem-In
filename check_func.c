@@ -45,21 +45,25 @@ int				if_exist(t_lemin *lemin, char **arr)
 t_lemin			*line_handler(t_lemin *lemin, char **arr)
 {
 	int		len;
+	t_room	*head;
 
+	head = lemin->head_room;
 	len = ft_strlen(arr[0]);
 	printf("line_handler\n");
-	if (lemin->rooms->name)
+	if (lemin->head_room->name)
 	{
-		while (lemin->rooms->next != NULL)
-			lemin->rooms = lemin->rooms->next;
-		lemin->rooms->next = (t_room *)malloc(sizeof(t_room));
-		lemin->rooms = lemin->rooms->next;
-		lemin->rooms->next = NULL;
+		while (lemin->head_room->next != NULL)
+			lemin->head_room = lemin->head_room->next;
+		lemin->head_room->next = (t_room *)malloc(sizeof(t_room));
+		lemin->head_room = lemin->head_room->next;
+		lemin->head_room->next = NULL;
+		lemin->head_room->visited = 0;
 	}
-	lemin->rooms->name = (char *)malloc(sizeof(char) * (len + 1));
-	ft_strcpy(lemin->rooms->name, arr[0]);
-	lemin->rooms->x = ft_atoi(arr[1]);
-	lemin->rooms->y = ft_atoi(arr[2]);
+	lemin->head_room->name = (char *)malloc(sizeof(char) * (len + 1));
+	ft_strcpy(lemin->head_room->name, arr[0]);
+	lemin->head_room->x = ft_atoi(arr[1]);
+	lemin->head_room->y = ft_atoi(arr[2]);
+	lemin->head_room = head;
 	return (lemin);
 }
 

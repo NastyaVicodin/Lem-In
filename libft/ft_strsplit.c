@@ -43,7 +43,6 @@ static char		*ft_record_word(const char *s, char c, int i)
 		i++;
 	}
 	i--;
-	new_word = ft_memalloc(length + 1);
 	new_word = ft_strsub(s, start, length);
 	return (new_word);
 }

@@ -36,25 +36,35 @@ t_lemin			*check_path(t_lemin *lemin)
 	
 	printf("---------------\n");
 	lemin->head_room = head;
-	if (lemin->start && lemin->end)
+	char	*search_room;
+
+	search_room = lemin->end;
+	while (lemin->start && search_room)
 	{
 		while (lemin->head_room)
 		{
-			if (ft_strcmp(lemin->head_room->name, lemin->start) == 0)
+			if (ft_strcmp(lemin->head_room->name, search_room) == 0) 
 			{
-				lemin->head_room->visited = level;
+				if (lemin->head_room->visited == 0)
+					lemin->head_room->visited = level;
+				head_l = lemin->head_room->head_link;
+				make_avail_rooms(lemin, head_l);
 				while (lemin->head_room->head_link)
 				{
-					if (ft_strcmp(lemin->head_room->head_link->name, lemin->end) == 0)
+					if (ft_strcmp(lemin->head_room->head_link->name, lemin->start) == 0)
 					{
 						make_path(lemin);
 						break ;
 					}
 					lemin->head_room->head_link = lemin->head_room->head_link->next;
 				}
+				search_room = find_needed(lemin, level);
+				if (!search_room)
+					level++;
 			}
 			lemin->head_room = lemin->head_room->next;
 		}
+		lemin->head_room = head;
 	}
 	else
 		lemin->error = -1;

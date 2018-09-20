@@ -26,12 +26,18 @@ typedef struct		s_room
 {
 	int				x;
 	int				y;
-	int				visited;
+	int				level;
 	char			*name;
 	struct s_links	*links;
 	struct s_links	*head_link;
 	struct s_room	*next;
 }					t_room;
+
+typedef struct 		s_room_lst
+{
+	struct s_room 	*room;
+	struct s_room	*next;
+}					t_room_lst;
 
 typedef struct		s_lemin
 {

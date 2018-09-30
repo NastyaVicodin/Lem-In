@@ -21,15 +21,14 @@ static t_lemin			*make_struct(void)
 	lemin->ant_count = 0;
 	lemin->start = NULL;
 	lemin->end = NULL;
-	lemin->rooms = (t_room *)malloc(sizeof(t_room));
-	lemin->rooms->visited = 0;
-	lemin->rooms->next = NULL;
-	lemin->rooms->name = NULL;
-	lemin->head_room = lemin->rooms;
-	lemin->rooms->links = (t_links *)malloc(sizeof(t_links));
-	lemin->rooms->links->next = NULL;
-	lemin->rooms->links->name = NULL;
-	lemin->head_room->head_link = lemin->rooms->links;
+	lemin->head_room = (t_room *)malloc(sizeof(t_room));
+	lemin->head_room->level = -1;
+	lemin->head_room->next = NULL;
+	lemin->head_room->name = NULL;
+	lemin->head_room->links = (t_links *)malloc(sizeof(t_links));
+	lemin->head_room->links->next = NULL;
+	lemin->head_room->links->name = NULL;
+	lemin->head_room->head_link = lemin->head_room->links;
 	return (lemin);
 }
 
@@ -82,7 +81,7 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			command_handler(lemin, line);
 		else
 		{
-			if_valid(lemin, line);
+			if_valid(lemin, line, 0);
 			lemin->error == -1 ? if_link(lemin, line) : 0;
 			free(line);
 		}

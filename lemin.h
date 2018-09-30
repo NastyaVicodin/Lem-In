@@ -35,8 +35,8 @@ typedef struct		s_room
 
 typedef struct 		s_room_lst
 {
-	struct s_room 	*room;
-	struct s_room	*next;
+	struct s_room 		*room;
+	struct s_room_lst	*next;
 }					t_room_lst;
 
 typedef struct		s_lemin
@@ -51,7 +51,7 @@ typedef struct		s_lemin
 int					if_all_num(char *line);
 int					if_exist(t_lemin *lemin, char **arr);
 t_lemin				*line_handler(t_lemin *lemin, char **arr);
-t_lemin				*if_valid(t_lemin *lemin, char *line);
+t_lemin				*if_valid(t_lemin *lemin, char *line, int flag);
 t_lemin				*command_handler(t_lemin *lemin, char *line);
 t_lemin				*if_link(t_lemin *lemin, char *line);
 t_lemin				*check_path(t_lemin *lemin);

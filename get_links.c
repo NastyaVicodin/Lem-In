@@ -88,13 +88,18 @@ static int		if_exist_rooms(t_lemin *lemin, char **arr)
 	i = 0;
 	head = lemin->head_room;
 	printf("if_exist_rooms\n");
+	printf("Link:head_room: %s\n", head->name);
 	while (lemin->head_room && i < 2)
 	{
 		if ((ft_strcmp(lemin->head_room->name, arr[0]) == 0 &&
 			link_notstored(lemin->head_room, arr[1]) == 1) ||
 			(ft_strcmp(lemin->head_room->name, arr[1]) == 0 &&
 			link_notstored(lemin->head_room, arr[0]) == 1))
+		{
 			i++;
+			printf("First: %s; second: %s\n", arr[0], arr[1]);
+		}
+			
 		lemin->head_room = lemin->head_room->next;
 	}
 	lemin->head_room = head;

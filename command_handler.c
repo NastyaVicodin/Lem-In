@@ -12,56 +12,29 @@
 
 #include "lemin.h"
 
-static t_lemin	*start_handler(t_lemin *lemin)
-{
-	char *line;
-	if (lemin->start == NULL && get_next_line(0, &line))
-	{
-		if_valid(lemin, line);
-		free(line);
-	}
-	else
-		lemin->error = -1;
-	return (lemin);
-}
-
-static t_lemin	*end_handler(t_lemin *lemin)
-{
-	char *line;
-
-	if (lemin->end == NULL && get_next_line(0, &line))
-	{
-		if_valid(lemin, line);
-		free(line);
-	}
-	else
-		lemin->error = -1;
-	return (lemin);
-}
-
 t_lemin			*command_handler(t_lemin *lemin, char *line)
 {
-	int len;
+	char *line_room;
 
 	if (ft_strcmp(line, "##start") == 0)
 	{
-		start_handler(lemin);
-		if (lemin->error == 0)
+		if (lemin->start == NULL && get_next_line(0, &line_room))
 		{
-			len = ft_strlen(lemin->rooms->name);
-			lemin->start = (char *)malloc(sizeof(char) * (len + 1));
-			ft_strcpy(lemin->start, lemin->rooms->name);
+			if_valid(lemin, line_room, 1);
+			free(line_room);
 		}
+		else
+			lemin->error = -1;
 	}
 	else if (ft_strcmp(line, "##end") == 0)
 	{
-		end_handler(lemin);
-		if (lemin->error == 0)
+		if (lemin->end == NULL && get_next_line(0, &line_room))
 		{
-			len = ft_strlen(lemin->rooms->name);
-			lemin->end = (char *)malloc(sizeof(char) * (len + 1));
-			ft_strcpy(lemin->end, lemin->rooms->name);
+			if_valid(lemin, line_room, 2);
+			free(line_room);
 		}
+		else
+			lemin->error = -1;
 	}
 	free(line);
 	return (lemin);

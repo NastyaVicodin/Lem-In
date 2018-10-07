@@ -28,7 +28,6 @@ typedef struct		s_room
 	int				y;
 	int				level;
 	char			*name;
-	struct s_links	*links;
 	struct s_links	*head_link;
 	struct s_room	*next;
 }					t_room;
@@ -46,7 +45,6 @@ typedef struct		s_lemin
 	char			*start;
 	char			*end;
 	struct s_room	*head_room;
-	struct s_room	*rooms;
 }					t_lemin;
 int					if_all_num(char *line);
 int					if_exist(t_lemin *lemin, char **arr);

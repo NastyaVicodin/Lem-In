@@ -48,6 +48,11 @@ void			free_lst(t_room_lst *lst)
 	}
 }
 
+void			make_path(t_lemin *lemin, t_room *curr_room)
+{
+
+}
+
 t_lemin			*check_path(t_lemin *lemin)
 {
 	t_room *head;
@@ -80,8 +85,8 @@ t_lemin			*check_path(t_lemin *lemin)
 	{
 		// avail_rooms = (t_room_lst *)malloc(sizeof(t_room_lst));
 		// avail_rooms->next = NULL;
-		// printf("END_room: %s\n", lemin->end);
-		// printf("START_room: %s\n", lemin->start);
+		printf("END_room: %s\n", lemin->end);
+		printf("START_room: %s\n", lemin->start);
 		while (ft_strcmp(lemin->head_room->name, lemin->end) != 0)
 			lemin->head_room = lemin->head_room->next;
 		search_room = lemin->head_room;
@@ -108,7 +113,7 @@ t_lemin			*check_path(t_lemin *lemin)
 				if (ft_strcmp(search_room->head_link->name, lemin->start) == 0)
 				{
 					// printf("%s\n", "MAKING PATH!");
-					//make_path(lemin);
+					make_path(lemin, search_room);
 					lemin->error = 1;
 					lemin->head_room = head;
 					search_room->head_link = head_l;

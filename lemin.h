@@ -40,6 +40,8 @@ typedef struct 		s_room_lst
 
 typedef struct		s_lemin
 {
+	int				ant_pass;
+	int				fd;
 	int				ant_count;
 	int				error;
 	char			*start;

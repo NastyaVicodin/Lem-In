@@ -36,17 +36,17 @@ static char		*ft_strccpy(char *str)
 	return (rat);
 }
 
-static int		ft_nline(char **buff, char **line, char **o_o)
+static int		ft_nline(char **buff, char **line, char **work_line)
 {
 	char *liberator;
 	char *sidekick;
 
-	liberator = *o_o;
+	liberator = *work_line;
 	if (ft_count_c(*buff, '\n'))
 	{
 		if (!(sidekick = ft_strccpy(*buff)))
 			return (-1);
-		if (!(*o_o = ft_strjoin(*o_o, sidekick)))
+		if (!(*work_line = ft_strjoin(*work_line, sidekick)))
 			return (-1);
 		ft_strdel(&liberator);
 		ft_strdel(&sidekick);
@@ -55,10 +55,10 @@ static int		ft_nline(char **buff, char **line, char **o_o)
 		if (!(*buff = ft_strdup(++(*buff))))
 			return (-1);
 		ft_strdel(&sidekick);
-		*line = *o_o;
+		*line = *work_line;
 		return (1);
 	}
-	if (!(*o_o = ft_strjoin(*o_o, *buff)))
+	if (!(*work_line = ft_strjoin(*work_line, *buff)))
 		return (-1);
 	ft_strdel(buff);
 	ft_strdel(&liberator);
@@ -97,7 +97,7 @@ int				get_next_line(const int fd, char **line)
 {
 	static t_op		file_mem;
 	t_op			*f;
-	char			*o_o;
+	char			*work_line;
 	int				check;
 
 	f = &file_mem;
@@ -105,17 +105,17 @@ int				get_next_line(const int fd, char **line)
 		return (-1);
 	if (!(f = ft_multi_desu(fd, f)))
 		return (-1);
-	(o_o) = ft_strnew(1);
-	if (f->buff && (check = ft_nline(&f->buff, line, &(o_o))))
+	(work_line) = ft_strnew(1);
+	if (f->buff && (check = ft_nline(&f->buff, line, &(work_line))))
 		return (check);
 	while ((read(fd, f->buff = ft_strnew(BUFF_SIZE), BUFF_SIZE)) > 0)
-		if ((check = ft_nline(&f->buff, line, &(o_o))))
+		if ((check = ft_nline(&f->buff, line, &(work_line))))
 			return (check);
-	if (ft_strlen(o_o))
+	if (ft_strlen(work_line))
 	{
-		*line = (o_o);
+		*line = (work_line);
 		return (1);
 	}
-	ft_strdel(&(o_o));
+	ft_strdel(&(work_line));
 	return (read(fd, NULL, BUFF_SIZE));
 }

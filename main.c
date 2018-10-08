@@ -36,7 +36,7 @@ static t_lemin			*get_ant_count(t_lemin *lemin)
 	char		*line;
 
 	//no leaks
-	while (get_next_line(0, &line))
+	while (get_next_line(lemin->fd, &line))
 	{
 		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
 			ft_strcmp(line, "##end") != 0)
@@ -63,7 +63,7 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 {
 	char		*line;
 
-	while (lemin->error == 0 && get_next_line(0, &line))
+	while (lemin->error == 0 && get_next_line(lemin->fd, &line))
 	{
 		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
 			ft_strcmp(line, "##end") != 0)
@@ -80,9 +80,9 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			command_handler(lemin, line);
 		else
 		{
-			// printf("if_valid....\n");
+			printf("if_valid....\n");
 			if_valid(lemin, line, 0);
-			// printf("lemin->error: %d\n", lemin->error);
+			printf("lemin->error: %d\n", lemin->error);
 			lemin->error == -1 ? if_link(lemin, line) : 0;
 			free(line);
 		}
@@ -102,12 +102,12 @@ void					free_all(t_lemin *lemin)
 
 		while (lemin->head_room)
 		{
-			// printf("free_room: %s\n", lemin->head_room->name);
+			printf("free_room: %s\n", lemin->head_room->name);
 			lemin->head_room->name ? free(lemin->head_room->name) : 0;
-			// printf("room name is free...\n");
+			printf("room name is free...\n");
 			while (lemin->head_room->head_link)
 			{
-				// printf("free_link: %s\n", lemin->head_room->head_link->name);
+				printf("free_link: %s\n", lemin->head_room->head_link->name);
 				lemin->head_room->head_link->name ? free(lemin->head_room->head_link->name) : 0;
 				prev_link = lemin->head_room->head_link;
 				lemin->head_room->head_link = lemin->head_room->head_link->next;
@@ -121,26 +121,35 @@ void					free_all(t_lemin *lemin)
 	}
 }
 
-int						main(void)
+int						main(int ac, char **av)
 {
 	t_lemin		*lemin;
 
-	lemin = make_struct();
-	get_ant_count(lemin);
-	if (lemin->error != -1)
+	if (ac <= 2)
 	{
-		get_rooms(lemin);
-		if (lemin->error != -1)
+		lemin = make_struct();
+		//printf("hello\n");
+		lemin->fd = ac == 2 ? open(av[1], O_RDONLY) : 0;
+		//printf("fd: %d\n", lemin->fd);
+		if (lemin->fd != -1)
 		{
-			write(1, "IM HAPPY!\n", 10);
+			get_ant_count(lemin);
+			//printf("ant_count: %d\n", lemin->ant_count);
+			if (lemin->error != -1)
+			{
+				get_rooms(lemin);
+				if (lemin->error != -1)
+				{
+					write(1, "IM HAPPY!\n", 10);
+				}
+				else
+					write(1, "ERROR\n", 7);
+			}
 		}
-		else
-			write(1, "ERROR\n", 7);
-		//lemin->error == -1 ? write(1, "ERROR\n", 7) : algo(lemin);
+		free_all(lemin);
 	}
 	else
 		write(1, "ERROR\n", 7);
-	free_all(lemin);
 	system("leaks lem-in");
 	return (0);
 }

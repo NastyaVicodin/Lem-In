@@ -13,7 +13,8 @@
 LIB = ./libft/libft.a
 LEMIN = lem-in
 
-SOURCE_LEMIN = main.c command_handler.c check_func.c get_links.c check_path.c
+SOURCE_LEMIN = main.c command_handler.c check_func.c get_links.c check_path.c	\
+			   make_path.c
 
 OBJS_LEMIN = $(SOURCE_LEMIN:.c=.o)
 

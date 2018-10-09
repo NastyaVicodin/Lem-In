@@ -22,6 +22,7 @@ static t_lemin			*make_struct(void)
 	lemin->start = NULL;
 	lemin->end = NULL;
 	lemin->head_room = (t_room *)malloc(sizeof(t_room));
+	lemin->head_room->ant_passed = 0;
 	lemin->head_room->level = -1;
 	lemin->head_room->next = NULL;
 	lemin->head_room->name = NULL;

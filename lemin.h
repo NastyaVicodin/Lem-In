@@ -19,6 +19,7 @@
 typedef  struct		s_links
 {
 	char			*name;
+	struct s_room	*room;
 	struct s_links	*next;
 }					t_links;
 
@@ -27,6 +28,7 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				level;
+	int				ant_passed;
 	char			*name;
 	struct s_links	*head_link;
 	struct s_room	*next;
@@ -40,7 +42,6 @@ typedef struct 		s_room_lst
 
 typedef struct		s_lemin
 {
-	int				ant_pass;
 	int				fd;
 	int				ant_count;
 	int				error;
@@ -55,4 +56,5 @@ t_lemin				*if_valid(t_lemin *lemin, char *line, int flag);
 t_lemin				*command_handler(t_lemin *lemin, char *line);
 t_lemin				*if_link(t_lemin *lemin, char *line);
 t_lemin				*check_path(t_lemin *lemin);
+void				make_path(t_lemin *lemin, t_room *curr_room);
 #endif

@@ -12,6 +12,23 @@
 
 #include "lemin.h"
 
+t_room			*find_room(t_lemin *lemin,  char *link)
+{
+	t_room	*head;
+	t_room	*res;
+
+	head = lemin->head_room;
+	while (lemin->head_room)
+	{
+		if (ft_strcmp(lemin->head_room->name, link) == 0)
+			break ;
+		lemin->head_room = lemin->head_room->next;
+	}
+	res = lemin->head_room;
+	lemin->head_room = head;
+	return (res);
+}
+
 static t_lemin	*new_link(t_room *room, t_lemin *lemin, int len, char *link)
 {
 	t_links	*head;
@@ -36,7 +53,8 @@ static t_lemin	*new_link(t_room *room, t_lemin *lemin, int len, char *link)
 		}
 		head = room->head_link;
 	}
-	room->head_link->name = (char *)malloc(sizeof(char) * (len + 1));
+	room->head_link->room = find_room(lemin, link);
+	room->head_link->name = room->head_link->room->name;
 	ft_strcpy(room->head_link->name, link);
 	room->head_link = head;
 	printf("new_link...after: %s\n", room->head_link->name);

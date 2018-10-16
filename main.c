@@ -26,9 +26,6 @@ static t_lemin			*make_struct(void)
 	lemin->head_room->level = -1;
 	lemin->head_room->next = NULL;
 	lemin->head_room->name = NULL;
-	// lemin->head_room->head_link = (t_links *)malloc(sizeof(t_links));
-	// lemin->head_room->head_link->next = NULL;
-	// lemin->head_room->head_link->name = NULL;
 	return (lemin);
 }
 
@@ -81,13 +78,15 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			command_handler(lemin, line);
 		else
 		{
-			printf("if_valid....\n");
+			//printf("if_valid....\n");
 			if_valid(lemin, line, 0);
-			printf("lemin->error: %d\n", lemin->error);
+			//printf("lemin->error: %d\n", lemin->error);
 			lemin->error == -1 ? if_link(lemin, line) : 0;
 			free(line);
 		}
 	}
+	if (lemin->error != 2)
+		check_path(lemin);
 	return (lemin);
 }
 
@@ -103,15 +102,15 @@ void					free_all(t_lemin *lemin)
 
 		while (lemin->head_room)
 		{
-			printf("free_room: %s\n", lemin->head_room->name);
+			//printf("hello\n");
 			lemin->head_room->name ? free(lemin->head_room->name) : 0;
-			printf("room name is free...\n");
+			//printf("bye\n");
 			while (lemin->head_room->head_link)
 			{
-				printf("free_link: %s\n", lemin->head_room->head_link->name);
-				lemin->head_room->head_link->name ? free(lemin->head_room->head_link->name) : 0;
 				prev_link = lemin->head_room->head_link;
+				//printf("really\n");
 				lemin->head_room->head_link = lemin->head_room->head_link->next;
+				//printf("nigga??\n");
 				free(prev_link);
 			}
 			prev_room = lemin->head_room;
@@ -151,6 +150,6 @@ int						main(int ac, char **av)
 	}
 	else
 		write(1, "ERROR\n", 7);
-	system("leaks lem-in");
+	//system("leaks lem-in");
 	return (0);
 }

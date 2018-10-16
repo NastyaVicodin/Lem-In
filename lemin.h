@@ -56,5 +56,5 @@ t_lemin				*if_valid(t_lemin *lemin, char *line, int flag);
 t_lemin				*command_handler(t_lemin *lemin, char *line);
 t_lemin				*if_link(t_lemin *lemin, char *line);
 t_lemin				*check_path(t_lemin *lemin);
-void				make_path(t_lemin *lemin, t_room *curr_room);
+void				make_path(t_lemin *lemin, t_room *curr_room, t_room *start_room);
 #endif

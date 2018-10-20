@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   make_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alukyane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,22 @@
 
 #include "lemin.h"
 
-void	print_path(t_room **path_arr, int size, int max_ant)
+static void		print_path(t_room **path_arr, int size, int max)
 {
 	int		i;
 	int		k;
 	int		room_count;
 
 	room_count = 0;
-	path_arr[0]->ant_passed = max_ant;
-	while (path_arr[size - 1]->ant_passed < max_ant)
+	path_arr[0]->ant_passed = max;
+	while (path_arr[size - 1]->ant_passed < max)
 	{
 		i = 0;
 		k = 0;
 		while (i < room_count + 1 && ((i < room_count && room_count < size)
 				|| i < size - 1))
 		{
-			if (path_arr[i]->ant_passed && path_arr[i + 1]->ant_passed < max_ant)
+			if (path_arr[i]->ant_passed && path_arr[i + 1]->ant_passed < max)
 			{
 				k++ != 0 ? ft_printf(" ") : 0;
 				path_arr[i]->ant_passed--;
@@ -41,17 +41,17 @@ void	print_path(t_room **path_arr, int size, int max_ant)
 	}
 }
 
-t_room	**make_path_array(t_room *start_room, t_room *curr_room, int size)
+static t_room	**make_path_array(t_room *start, t_room *curr_room, int size)
 {
 	t_room	**path_arr;
 
 	path_arr = (t_room **)malloc(sizeof(t_room *) * (size));
-	path_arr[0] = start_room;
+	path_arr[0] = start;
 	path_arr[1] = curr_room;
 	return (path_arr);
 }
 
-t_room	**fill_path_array(t_room *start_room, t_room *curr_room, t_lemin *lemin, int size)
+static t_room	**fill_path(t_room *start, t_room *curr, t_lemin *l, int size)
 {
 	t_room	**path_arr;
 	int		i;
@@ -59,34 +59,34 @@ t_room	**fill_path_array(t_room *start_room, t_room *curr_room, t_lemin *lemin, 
 	t_room	*tmp;
 
 	i = 2;
-	path_arr = make_path_array(start_room, curr_room, size);
-	while (ft_strcmp(curr_room->name, lemin->end) != 0)
+	path_arr = make_path_array(start, curr, size);
+	while (ft_strcmp(curr->name, l->end) != 0)
 	{
-		head_l = curr_room->head_link;
-		while (curr_room->head_link)
+		head_l = curr->head_link;
+		while (curr->head_link)
 		{
-			if (curr_room->level - curr_room->head_link->room->level == 1)
+			if (curr->level - curr->head_link->room->level == 1)
 			{
-				path_arr[i++] = curr_room->head_link->room;
-				tmp = curr_room->head_link->room;
-				curr_room->head_link = head_l;
-				curr_room = tmp;
+				path_arr[i++] = curr->head_link->room;
+				tmp = curr->head_link->room;
+				curr->head_link = head_l;
+				curr = tmp;
 				break ;
 			}
-			curr_room->head_link = curr_room->head_link->next;
+			curr->head_link = curr->head_link->next;
 		}
 	}
-	path_arr[i] = curr_room;
+	path_arr[i] = curr;
 	return (path_arr);
 }
 
-void	make_path(t_lemin *lemin, t_room *curr, t_room *start)
+void			make_path(t_lemin *lemin, t_room *curr, t_room *start)
 {
 	t_room	**path_arr;
 	int		size;
 
 	size = curr->level + 2;
-	path_arr = fill_path_array(start, curr, lemin, size);
+	path_arr = fill_path(start, curr, lemin, size);
 	print_path(path_arr, size, lemin->ant_count);
 	free(path_arr);
 }

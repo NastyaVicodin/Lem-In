@@ -16,14 +16,14 @@
 # include "libft/libft.h"
 # include <stdio.h>
 
-typedef  struct		s_links
+typedef	struct		s_links
 {
 	char			*name;
 	struct s_room	*room;
 	struct s_links	*next;
 }					t_links;
 
-typedef struct		s_room
+typedef	struct		s_room
 {
 	int				x;
 	int				y;
@@ -34,9 +34,9 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
-typedef struct 		s_room_lst
+typedef struct		s_room_lst
 {
-	struct s_room 		*room;
+	struct s_room		*room;
 	struct s_room_lst	*next;
 }					t_room_lst;
 

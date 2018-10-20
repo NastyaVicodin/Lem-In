@@ -52,7 +52,7 @@ t_room				*next_srch(t_room *srch, t_links *head_l, t_room_lst *av)
 
 t_room_lst			*change_avail(t_room_lst *av, t_room *head, t_room *srch)
 {
-	t_room 		*head_save;
+	t_room		*head_save;
 
 	head_save = head;
 	while (head && head->name &&
@@ -72,7 +72,7 @@ t_room_lst			*change_avail(t_room_lst *av, t_room *head, t_room *srch)
 	return (av);
 }
 
-t_links			*set_head_link(t_room *search_room)
+t_links				*set_head_link(t_room *search_room)
 {
 	if (search_room->head_link && search_room->head_link->name)
 		return (search_room->head_link);

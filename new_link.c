@@ -42,7 +42,7 @@ t_lemin			*new_link(t_room *r, t_room *h, char *link, t_lemin *l)
 		r->head_link = r->head_link->next;
 		r->head_link->next = NULL;
 	}
-	else 
+	else
 	{
 		if (!r->head_link)
 		{

@@ -38,7 +38,7 @@ static t_lemin	*get_links(t_lemin *lemin, char **arr)
 }
 
 static int		link_notstored(t_room *room, char *link)
-{ /* no leaks */
+{
 	t_links	*head;
 
 	if (ft_strcmp(room->name, link) == 0)
@@ -63,7 +63,7 @@ static int		link_notstored(t_room *room, char *link)
 }
 
 static int		if_exist_rooms(t_lemin *lemin, char **arr)
-{ /* no leaks */
+{
 	t_room	*head;
 	int		i;
 

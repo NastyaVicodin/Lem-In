@@ -72,7 +72,7 @@ static t_lemin	*line_handler(t_lemin *lemin, char **arr)
 
 static t_lemin	*write_start_end(t_lemin *lemin, char *line, int flag)
 {
-	int 	len;
+	int	len;
 
 	len = ft_strlen(line);
 	if (flag == 1)

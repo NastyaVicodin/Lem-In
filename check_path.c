@@ -15,6 +15,7 @@
 static void		free_lst(t_room_lst *lst)
 {
 	t_room_lst	*tmp;
+
 	while (lst)
 	{
 		tmp = lst->next;
@@ -25,7 +26,7 @@ static void		free_lst(t_room_lst *lst)
 
 static t_lemin	*make_search(t_lemin *lemin, t_room *search, t_room *head)
 {
-	t_links 	*head_l;
+	t_links		*head_l;
 	t_room_lst	*av;
 
 	av = NULL;

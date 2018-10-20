@@ -30,7 +30,7 @@ static t_lemin			*make_struct(void)
 }
 
 static t_lemin			*get_ant_count(t_lemin *lemin)
-{ /* no leaks */
+{
 	char		*line;
 
 	while (get_next_line(lemin->fd, &line))
@@ -85,7 +85,7 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 	return (lemin);
 }
 
-void					free_all(t_lemin *lemin)
+static void				free_all(t_lemin *lemin)
 {
 	t_room	*prev_room;
 	t_links	*prev_link;

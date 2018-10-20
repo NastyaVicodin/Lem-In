@@ -12,27 +12,7 @@
 
 #include "lemin.h"
 
-t_room_lst		*add_to_room_lst(t_room_lst *avail_rooms, t_room *head, int level)
-{
-	t_room_lst *head_avail;
-
-	head_avail = avail_rooms;
-	if (avail_rooms && avail_rooms->room)
-	{
-		while (avail_rooms->next)
-			avail_rooms = avail_rooms->next;
-		avail_rooms->next = (t_room_lst *)malloc(sizeof(t_room_lst));
-		avail_rooms = avail_rooms->next;
-		avail_rooms->next = NULL;
-	}
-	avail_rooms->room = head;
-	avail_rooms->room->level = level + 1;
-	if (level && head_avail && head_avail->room && head_avail->room->name)
-		avail_rooms = head_avail;
-	return (avail_rooms);
-}
-
-void			free_lst(t_room_lst *lst)
+static void		free_lst(t_room_lst *lst)
 {
 	t_room_lst	*tmp;
 	while (lst)
@@ -43,65 +23,32 @@ void			free_lst(t_room_lst *lst)
 	}
 }
 
-t_room_lst		*change_avail_rooms(t_room_lst *avail_rooms, t_room *head, t_room *search_room)
+static t_lemin	*make_search(t_lemin *lemin, t_room *search, t_room *head)
 {
-	t_room 		*head_save;
+	t_links 	*head_l;
+	t_room_lst	*av;
 
-	head_save = head;
-	while (head && head->name && ft_strcmp(head->name, search_room->head_link->name) != 0)
-		head = head->next;
-	if (head && head->name && head->level == -1)
+	av = NULL;
+	while (search && lemin->error != 2)
 	{
-		if (!avail_rooms)
+		head_l = set_head_link(search);
+		while (search->head_link && search->head_link->name)
 		{
-			avail_rooms = (t_room_lst *)malloc(sizeof(t_room_lst));
-			avail_rooms->room = NULL;
-			avail_rooms->next = NULL;
-		}
-		add_to_room_lst(avail_rooms, head, search_room->level);
-	}
-	head = head_save;
-	return (avail_rooms);
-}
-
-t_lemin			*make_search(t_lemin *lemin, t_room *search_room, t_room *head)
-{
-	t_links *head_l;
-	t_room_lst	*avail_rooms;
-	t_room_lst	*tmp_room;
-
-	avail_rooms = NULL;
-	while (search_room && lemin->error != 2)
-		{
-			if (search_room->head_link && search_room->head_link->name)
-				head_l = search_room->head_link;
+			if (ft_strcmp(search->head_link->name, lemin->start) == 0)
+			{
+				search->head_link = head_l;
+				make_path(lemin, search, search->head_link->room);
+				lemin->error = 2;
+				break ;
+			}
 			else
-				head_l = NULL;
-			while (search_room->head_link && search_room->head_link->name)
-			{
-				if (ft_strcmp(search_room->head_link->name, lemin->start) == 0)
-				{
-					search_room->head_link = head_l;
-					make_path(lemin, search_room, search_room->head_link->room);
-					lemin->error = 2;
-					free_lst(avail_rooms);
-					break ;
-				}
-				else
-					avail_rooms = change_avail_rooms(avail_rooms, head, search_room);
-				search_room->head_link = search_room->head_link->next;
-			}
-			if (lemin->error != 2)
-			{
-				if (head_l)
-					search_room->head_link = head_l;
-				search_room = avail_rooms ? avail_rooms->room : NULL;
-				tmp_room = avail_rooms;
-				avail_rooms = avail_rooms ? avail_rooms->next : NULL;
-				tmp_room ? free(tmp_room) : 0;
-			}
+				av = change_avail(av, head, search);
+			search->head_link = search->head_link->next;
 		}
-		avail_rooms ? free_lst(avail_rooms) : 0;
+		search = lemin->error != 2 ? next_srch(search, head_l, av) : search;
+		av = lemin->error != 2 ? next_avail_room(av) : av;
+	}
+	av ? free_lst(av) : 0;
 	return (lemin);
 }
 

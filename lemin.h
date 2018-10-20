@@ -50,11 +50,14 @@ typedef struct		s_lemin
 	struct s_room	*head_room;
 }					t_lemin;
 int					if_all_num(char *line);
-int					if_exist(t_lemin *lemin, char **arr);
-t_lemin				*line_handler(t_lemin *lemin, char **arr);
 t_lemin				*if_valid(t_lemin *lemin, char *line, int flag);
 t_lemin				*command_handler(t_lemin *lemin, char *line);
+t_lemin				*new_link(t_room *r, t_room *h, char *link, t_lemin *l);
 t_lemin				*if_link(t_lemin *lemin, char *line);
+t_links				*set_head_link(t_room *search_room);
+t_room_lst			*next_avail_room(t_room_lst *avail_rooms);
+t_room				*next_srch(t_room *srch, t_links *head_l, t_room_lst *av);
+t_room_lst			*change_avail(t_room_lst *av, t_room *head, t_room *srch);
 t_lemin				*check_path(t_lemin *lemin);
-void				make_path(t_lemin *lemin, t_room *curr_room, t_room *start_room);
+void				make_path(t_lemin *lemin, t_room *curr, t_room *start);
 #endif

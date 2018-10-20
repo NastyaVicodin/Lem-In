@@ -20,7 +20,7 @@ void	print_path(t_room **path_arr, int size, int max_ant)
 
 	room_count = 0;
 	path_arr[0]->ant_passed = max_ant;
-	while (path_arr[size]->ant_passed < max_ant)
+	while (path_arr[size - 1]->ant_passed < max_ant)
 	{
 		i = 0;
 		k = 0;
@@ -80,13 +80,13 @@ t_room	**fill_path_array(t_room *start_room, t_room *curr_room, t_lemin *lemin, 
 	return (path_arr);
 }
 
-void	make_path(t_lemin *lemin, t_room *curr_room, t_room *start_room)
+void	make_path(t_lemin *lemin, t_room *curr, t_room *start)
 {
 	t_room	**path_arr;
 	int		size;
 
-	size = curr_room->level + 2;
-	path_arr = fill_path_array(start_room, curr_room, lemin, size);
+	size = curr->level + 2;
+	path_arr = fill_path_array(start, curr, lemin, size);
 	print_path(path_arr, size, lemin->ant_count);
 	free(path_arr);
 }

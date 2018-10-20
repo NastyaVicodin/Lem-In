@@ -16,7 +16,6 @@ int				if_all_num(char *line)
 {
 	int		i;
 
-	//printf("if_all_num....\n");
 	if (ft_strlen(line) > 20)
 		return (-1);
 	i = -1;
@@ -28,11 +27,10 @@ int				if_all_num(char *line)
 	return (1);
 }
 
-int				if_exist(t_lemin *lemin, char **arr)
+static int		if_exist(t_lemin *lemin, char **arr)
 {
 	t_room	*head;
 
-	//printf("if_exist...\n");
 	head = lemin->head_room;
 	while (head && head->name)
 	{
@@ -44,14 +42,13 @@ int				if_exist(t_lemin *lemin, char **arr)
 	return (1);
 }
 
-t_lemin			*line_handler(t_lemin *lemin, char **arr)
+static t_lemin	*line_handler(t_lemin *lemin, char **arr)
 {
 	int		len;
 	t_room	*head;
 
 	head = lemin->head_room;
 	len = ft_strlen(arr[0]);
-	//printf("line_handler\n");
 	if (lemin->head_room->name)
 	{
 		while (lemin->head_room->next != NULL)
@@ -70,11 +67,10 @@ t_lemin			*line_handler(t_lemin *lemin, char **arr)
 	lemin->head_room->x = ft_atoi(arr[1]);
 	lemin->head_room->y = ft_atoi(arr[2]);
 	lemin->head_room = head;
-	//printf("Line_handler:head: %s\n", lemin->head_room->name);
 	return (lemin);
 }
 
-t_lemin			*write_start_end(t_lemin *lemin, char *line, int flag)
+static t_lemin	*write_start_end(t_lemin *lemin, char *line, int flag)
 {
 	int 	len;
 
@@ -98,7 +94,6 @@ t_lemin			*if_valid(t_lemin *lemin, char *line, int flag)
 	int		i;
 
 	i = 0;
-	//printf("if_valid....start\n");
 	arr = ft_strsplit(line, ' ');
 	while (arr[i])
 		i++;
@@ -116,6 +111,5 @@ t_lemin			*if_valid(t_lemin *lemin, char *line, int flag)
 	else
 		lemin->error = -1;
 	free_array(arr);
-	//printf("if_valid....end\n");
 	return (lemin);
 }

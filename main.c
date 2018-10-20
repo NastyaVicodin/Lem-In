@@ -30,10 +30,9 @@ static t_lemin			*make_struct(void)
 }
 
 static t_lemin			*get_ant_count(t_lemin *lemin)
-{
+{ /* no leaks */
 	char		*line;
 
-	//no leaks
 	while (get_next_line(lemin->fd, &line))
 	{
 		if (line[0] == '#' && ft_strcmp(line, "##start") != 0 &&
@@ -83,7 +82,6 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			free(line);
 		}
 	}
-	lemin->error != 2 ? check_path(lemin) : 0;
 	return (lemin);
 }
 
@@ -96,7 +94,6 @@ void					free_all(t_lemin *lemin)
 	{
 		lemin->start ? free(lemin->start) : 0;
 		lemin->end ? free(lemin->end) : 0;
-
 		while (lemin->head_room)
 		{
 			lemin->head_room->name ? free(lemin->head_room->name) : 0;
@@ -128,6 +125,7 @@ int						main(int ac, char **av)
 			if (lemin->error != -1)
 			{
 				get_rooms(lemin);
+				lemin->error != 2 ? check_path(lemin) : 0;
 				lemin->error == -1 ? write(1, "ERROR\n", 7) : 0;
 			}
 			else

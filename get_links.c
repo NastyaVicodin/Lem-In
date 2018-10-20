@@ -12,57 +12,6 @@
 
 #include "lemin.h"
 
-t_room			*find_room(t_room *head_lem, char *link)
-{
-	t_room	*head;
-	t_room	*res;
-
-	//printf("find_room...\n");
-	head = head_lem;
-	while (head_lem)
-	{
-		if (ft_strcmp(head_lem->name, link) == 0)
-			break ;
-		head_lem = head_lem->next;
-	}
-	res = head_lem;
-	head_lem = head;
-	//printf("===res: %s\n", res->name);
-	return (res);
-}
-
-static t_lemin	*new_link(t_room *room, t_room *head_lem, char *link, t_lemin *lemin)
-{
-	t_links	*head;
-
-	// if (room->head_link)
-	// 	printf("new_link...before: %s\n", room->head_link->name);
-	if (room->head_link && room->head_link->name)
-	{
-		head = room->head_link;
-		while (room->head_link->next != NULL)
-			room->head_link = room->head_link->next;
-		room->head_link->next = (t_links *)malloc(sizeof(t_links));
-		room->head_link = room->head_link->next;
-		room->head_link->next = NULL;
-	}
-	else 
-	{
-		if (!room->head_link)
-		{
-			room->head_link = (t_links *)malloc(sizeof(t_links));
-			room->head_link->next = NULL;
-		}
-		head = room->head_link;
-	}
-	room->head_link->room = find_room(head_lem, link);
-	room->head_link->name = room->head_link->room->name;
-	ft_strcpy(room->head_link->name, link);
-	room->head_link = head;
-	//printf("new_link...after: %s\n", room->head_link->name);
-	return (lemin);
-}
-
 static t_lemin	*get_links(t_lemin *lemin, char **arr)
 {
 	int		i;
@@ -70,7 +19,6 @@ static t_lemin	*get_links(t_lemin *lemin, char **arr)
 
 	head = lemin->head_room;
 	i = 0;
-	//printf("get_links==========: %s, %s\n", arr[0], arr[1]);
 	while (lemin->head_room && lemin->head_room->name && i < 2)
 	{
 		if (ft_strcmp(lemin->head_room->name, arr[0]) == 0)
@@ -90,8 +38,7 @@ static t_lemin	*get_links(t_lemin *lemin, char **arr)
 }
 
 static int		link_notstored(t_room *room, char *link)
-{ //no leaks
-	
+{ /* no leaks */
 	t_links	*head;
 
 	if (ft_strcmp(room->name, link) == 0)
@@ -116,34 +63,22 @@ static int		link_notstored(t_room *room, char *link)
 }
 
 static int		if_exist_rooms(t_lemin *lemin, char **arr)
-{ //no leaks
+{ /* no leaks */
 	t_room	*head;
 	int		i;
 
 	i = 0;
 	head = lemin->head_room;
-	//printf("if_exist_rooms\n");
-	
 	while (lemin->head_room && i < 2)
 	{
-		// printf("if_exist_rooms 1\n");
-		// printf("Non-stored... head_link: %s\n", lemin->head_room->head_link->name);
 		if ((ft_strcmp(lemin->head_room->name, arr[0]) == 0 &&
 			link_notstored(lemin->head_room, arr[1]) == 1) ||
 			(ft_strcmp(lemin->head_room->name, arr[1]) == 0 &&
 			link_notstored(lemin->head_room, arr[0]) == 1))
-		{
-			//printf("Link:head_room: %s\n", head->name);
 			i++;
-			// if (lemin->head_room->head_link)
-			// 	printf("Non-stored... end...head_link: %s\n", lemin->head_room->head_link->name);
-			// printf("First: %s; second: %s\n", arr[0], arr[1]);
-		}
-		//printf("if_exist_rooms 2\n");
 		lemin->head_room = lemin->head_room->next;
 	}
 	lemin->head_room = head;
-	//printf("Link:head_room: %s\n", lemin->head_room->name);
 	if (i != 2)
 		return (-1);
 	return (1);
@@ -156,7 +91,6 @@ t_lemin			*if_link(t_lemin *lemin, char *line)
 
 	i = 0;
 	arr = ft_strsplit(line, '-');
-	//printf("if_link\n");
 	while (arr[i])
 		i++;
 	if (i == 2 && arr[0][0] && arr[0][0] != '#' && arr[0][0] != 'L' &&
@@ -166,7 +100,6 @@ t_lemin			*if_link(t_lemin *lemin, char *line)
 			if_exist_rooms(lemin, arr) == 1)
 		{
 			lemin->error = 0;
-			//printf("Going to get_links....\n");
 			get_links(lemin, arr);
 		}
 	}

@@ -126,15 +126,17 @@ int						main(int ac, char **av)
 			{
 				get_rooms(lemin);
 				lemin->error != 2 ? check_path(lemin) : 0;
-				lemin->error == -1 ? write(1, "ERROR\n", 7) : 0;
+				lemin->error == -1 ? write(1, "ERROR: No path found\n", 21) : 0;
 			}
 			else
-				write(1, "ERROR\n", 7);
+				write(1, "ERROR: Wrong ant's amount\n", 26);
 		}
+		else
+			write(1, "ERROR: File is not valid\n", 25);
 		free_all(lemin);
 	}
 	else
-		write(1, "ERROR\n", 7);
+		write(1, "ERROR: Too many files\n", 22);
 	system("leaks lem-in");
 	return (0);
 }

@@ -59,5 +59,5 @@ t_room_lst			*next_avail_room(t_room_lst *avail_rooms);
 t_room				*next_srch(t_room *srch, t_links *head_l, t_room_lst *av);
 t_room_lst			*change_avail(t_room_lst *av, t_room *head, t_room *srch);
 t_lemin				*check_path(t_lemin *lemin);
-void				make_path(t_lemin *lemin, t_room *curr, t_room *start);
+t_lemin				*make_path(t_lemin *l, t_room *c, t_room *s, t_links *h);
 #endif

@@ -20,6 +20,9 @@ static void		print_path(t_room **path_arr, int size, int max)
 
 	room_count = 0;
 	path_arr[0]->ant_passed = max;
+	i = -1;
+	while (++i < size)
+		ft_printf("path[%d] = %s\n", i, path_arr[i]->name);
 	while (path_arr[size - 1]->ant_passed < max)
 	{
 		i = 0;
@@ -80,13 +83,16 @@ static t_room	**fill_path(t_room *start, t_room *curr, t_lemin *l, int size)
 	return (path_arr);
 }
 
-void			make_path(t_lemin *lemin, t_room *curr, t_room *start)
+t_lemin			*make_path(t_lemin *l, t_room *c, t_room *s, t_links *h)
 {
 	t_room	**path_arr;
 	int		size;
 
-	size = curr->level + 2;
-	path_arr = fill_path(start, curr, lemin, size);
-	print_path(path_arr, size, lemin->ant_count);
+	size = c->level + 2;
+	c->head_link = h;
+	printf("start in path: %s\n", s->name);
+	path_arr = fill_path(s, c, l, size);
+	print_path(path_arr, size, l->ant_count);
 	free(path_arr);
+	return (l);
 }

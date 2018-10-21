@@ -24,29 +24,28 @@ static void		free_lst(t_room_lst *lst)
 	}
 }
 
-static t_lemin	*make_search(t_lemin *lemin, t_room *search, t_room *head)
+static t_lemin	*make_search(t_lemin *lemin, t_room *srch, t_room *head)
 {
 	t_links		*head_l;
 	t_room_lst	*av;
 
 	av = NULL;
-	while (search && lemin->error != 2)
+	while (srch && lemin->error != 2)
 	{
-		head_l = set_head_link(search);
-		while (search->head_link && search->head_link->name)
+		head_l = set_head_link(srch);
+		while (srch->head_link && srch->head_link->name)
 		{
-			if (ft_strcmp(search->head_link->name, lemin->start) == 0)
+			if (ft_strcmp(srch->head_link->name, lemin->start) == 0)
 			{
-				search->head_link = head_l;
-				make_path(lemin, search, search->head_link->room);
+				lemin = make_path(lemin, srch, srch->head_link->room, head_l);
 				lemin->error = 2;
 				break ;
 			}
 			else
-				av = change_avail(av, head, search);
-			search->head_link = search->head_link->next;
+				av = change_avail(av, head, srch);
+			srch->head_link = srch->head_link->next;
 		}
-		search = lemin->error != 2 ? next_srch(search, head_l, av) : search;
+		srch = lemin->error != 2 ? next_srch(srch, head_l, av) : srch;
 		av = lemin->error != 2 ? next_avail_room(av) : av;
 	}
 	av ? free_lst(av) : 0;

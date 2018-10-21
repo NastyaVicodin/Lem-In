@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-static void		print_path(t_room **path_arr, int size, int max)
+static void		print_path(t_room **path_arr, int size, size_t max)
 {
 	int		i;
 	int		k;

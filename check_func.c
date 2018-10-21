@@ -16,7 +16,7 @@ int				if_all_num(char *line)
 {
 	int		i;
 
-	if (ft_strlen(line) > 20)
+	if (ft_strlen(line) > 19)
 		return (-1);
 	i = -1;
 	while (line[++i])

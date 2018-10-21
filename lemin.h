@@ -28,7 +28,7 @@ typedef	struct		s_room
 	int				x;
 	int				y;
 	int				level;
-	int				ant_passed;
+	size_t			ant_passed;
 	char			*name;
 	struct s_links	*head_link;
 	struct s_room	*next;
@@ -43,7 +43,7 @@ typedef struct		s_room_lst
 typedef struct		s_lemin
 {
 	int				fd;
-	int				ant_count;
+	size_t			ant_count;
 	int				error;
 	char			*start;
 	char			*end;

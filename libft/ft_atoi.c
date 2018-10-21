@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int		ft_check_how_long(long long int k, char c, size_t len)
+static long long int	ft_check_how_long(long long int k, char c, size_t len)
 {
 	if (k <= 9223372036854775807 && k >= 0 && len <= 19)
 	{
@@ -27,7 +27,7 @@ static int		ft_check_how_long(long long int k, char c, size_t len)
 	return (k);
 }
 
-int				ft_atoi(const char *str)
+long long int			ft_atoi(const char *str)
 {
 	int				i;
 	int				min;

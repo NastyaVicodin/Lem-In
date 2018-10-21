@@ -41,9 +41,9 @@ static t_lemin			*get_ant_count(t_lemin *lemin)
 			free(line);
 			continue ;
 		}
-		if (if_all_num(line) == 1)
+		if (line[0] != '0' && if_all_num(line) == 1)
 			lemin->ant_count = ft_atoi(line);
-		if (!lemin->ant_count)
+		if (lemin->ant_count == 0)
 		{
 			lemin->error = -1;
 			free(line);

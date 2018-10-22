@@ -68,7 +68,7 @@ static t_lemin			*get_rooms(t_lemin *lemin)
 			free(line);
 			continue ;
 		}
-		else if (line[0] == 'L')
+		else if (line[0] == 'L' || line[0] == '-' || line[0] == ' ')
 		{
 			lemin->error = -1;
 			free(line);

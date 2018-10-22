@@ -12,35 +12,29 @@
 
 #include "lemin.h"
 
-static void		print_path(t_room **path_arr, int size, size_t max)
+static void		print_path(t_room **p, int size, size_t max)
 {
 	int		i;
 	int		k;
-	int		room_count;
 
-	room_count = 0;
-	path_arr[0]->ant_passed = max;
+	p[0]->ant_passed = max;
 	i = -1;
-	while (++i < size)
-		ft_printf("path[%d] = %s\n", i, path_arr[i]->name);
-	while (path_arr[size - 1]->ant_passed < max)
+	while (p[size - 1]->ant_passed < max)
 	{
-		i = 0;
+		i = size - 2;
 		k = 0;
-		while (i < room_count + 1 && ((i < room_count && room_count < size)
-				|| i < size - 1))
+		while (i >= 0)
 		{
-			if (path_arr[i]->ant_passed && path_arr[i + 1]->ant_passed < max)
+			if (p[i]->ant_passed)
 			{
 				k++ != 0 ? ft_printf(" ") : 0;
-				path_arr[i]->ant_passed--;
-				path_arr[i + 1]->ant_passed++;
-				ft_printf("L%s-%s", path_arr[i]->name, path_arr[i + 1]->name);
+				p[i + 1]->ant_passed++;
+				if (p[i + 1]->ant_passed <= max)
+					ft_printf("L%d-%s", p[i + 1]->ant_passed, p[i + 1]->name);
 			}
-			i++;
+			i--;
 		}
 		ft_printf("\n");
-		room_count++;
 	}
 }
 

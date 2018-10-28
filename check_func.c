@@ -21,7 +21,8 @@ int				if_all_num(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (!('0' <= line[i] && line[i] <= '9'))
+		if (!('0' <= line[i] && line[i] <= '9') && !(i == 0
+			&& line[i] == '-'))
 			return (-1);
 	}
 	return (1);

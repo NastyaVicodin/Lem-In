@@ -41,7 +41,7 @@ static t_lemin			*get_ant_count(t_lemin *lemin)
 			free(line);
 			continue ;
 		}
-		if (line[0] != '0' && if_all_num(line) == 1)
+		if (line[0] != '0' && line[0] != '-' && if_all_num(line) == 1)
 			lemin->ant_count = ft_atoi(line);
 		if (lemin->ant_count == 0)
 		{
@@ -137,6 +137,5 @@ int						main(int ac, char **av)
 	}
 	else
 		write(1, "ERROR: Too many files\n", 22);
-	system("leaks lem-in");
 	return (0);
 }

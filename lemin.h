@@ -14,7 +14,6 @@
 # define LEMIN_H
 
 # include "libft/libft.h"
-# include <stdio.h>
 
 typedef	struct		s_links
 {

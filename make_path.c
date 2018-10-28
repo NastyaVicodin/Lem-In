@@ -84,7 +84,6 @@ t_lemin			*make_path(t_lemin *l, t_room *c, t_room *s, t_links *h)
 
 	size = c->level + 2;
 	c->head_link = h;
-	printf("start in path: %s\n", s->name);
 	path_arr = fill_path(s, c, l, size);
 	print_path(path_arr, size, l->ant_count);
 	free(path_arr);

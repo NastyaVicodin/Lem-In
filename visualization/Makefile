@@ -10,36 +10,28 @@
 #                                                                              #
 #******************************************************************************#
 
-LIB = ./libft/libft.a
-LEMIN = lem-in
+LIB = ../libft/libft.a
+VISUALIZATION = visual
 
-SOURCE_LEMIN = main.c command_handler.c check_func.c get_links.c check_path.c	\
-			   make_path.c room_operations.c new_link.c
+SRC_VISUAL = main.c
 
-OBJS_LEMIN = $(SOURCE_LEMIN:.c=.o)
+OBJS_VISUAL = $(SRC_VISUAL:.c=.o)
 
-all: lib $(LEMIN) visual
+all: $(VISUALIZATION)
 
-visual:
-	make -C ./visualization
+$(LIB):
+	make -C ../libft
 
 %.o:%.c
 	@gcc -Wall -Wextra -Werror -o $@ -c $<
 
-lib:
-	make -C ./libft
-
-$(LEMIN): $(OBJS_LEMIN)
-	@gcc -o $(LEMIN) $(OBJS_LEMIN) $(LIB)
+$(VISUALIZATION): $(OBJS_VISUAL) $(LIB)
+	@gcc -o $(VISUALIZATION) $(OBJS_VISUAL) $(LIB)
 
 clean:
-	rm -f $(OBJS_LEMIN)
-	make -C ./libft clean
-	make -C ./visualization clean
+	rm -f $(OBJS_VISUAL)
 
 fclean: clean
-	rm -f $(LEMIN)
-	make -C ./libft fclean
-	make -C ./visualization fclean
+	rm -f $(VISUALIZATION)
 
 re: fclean all
